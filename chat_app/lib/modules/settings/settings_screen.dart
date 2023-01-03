@@ -65,7 +65,7 @@ class SettingsScreen extends StatelessWidget {
                     children: [
                       Image.network(
                         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt7ROwCM_0CZhrhmZ_svE5m1KhfTu5gNUdduLqLuZP9XhPseMtoc52HGIPXvX3VO2AlH8&usqp=CAU',
-                        width: 20,
+                        width: 19,
                       ),
                     ],
                   ),
