@@ -53,6 +53,8 @@ Widget buildMsgItem() => Padding(
               children: [
                 Icon(
                   Icons.done_all,
+                  color: Colors.blue,
+                  size: 20.0,
                 ),
                 SizedBox(
                   width: 3.0,
@@ -63,6 +65,62 @@ Widget buildMsgItem() => Padding(
               ],
             ),
           ],
+        ),
+      ),
+    ],
+  ),
+);
+
+Widget buildCallItem() => Padding(
+  padding: EdgeInsets.symmetric(
+    horizontal: 20.0,
+    vertical: 10.0,
+  ),
+  child: Row(
+    children: [
+      CircleAvatar(
+        radius: 30.0,
+        backgroundImage: NetworkImage("https://cdn-icons-png.flaticon.com/512/3135/3135715.png"),
+      ),
+      SizedBox(
+        width: 20.0,
+      ),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'OUAZIZI Ayoub',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Row(
+              children: [
+                Icon(
+                  Icons.call_received,
+                  color: Colors.green,
+                  size: 15.0,
+                ),
+                SizedBox(
+                  width: 3.0,
+                ),
+                Text(
+                  '31/12/2022 à 21:11',
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      IconButton(
+        onPressed: (){},
+        icon: Icon(
+          Icons.call,
+          color: Colors.green,
         ),
       ),
     ],

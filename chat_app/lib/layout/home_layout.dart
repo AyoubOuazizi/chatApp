@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../modules/calls/calls_screen.dart';
 import '../modules/messages/messages_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,12 +11,24 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int currentIndex = 0;
+  List<Widget> screens = [
+    MsgScreen(),
+    CallScreen(),
+    CallScreen(),
+  ];
+  List<String> titles = [
+    'Messages',
+    'Calls',
+    'Settings',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'ChatApp'
+          titles[currentIndex],
         ),
         actions: [
           IconButton(
@@ -29,7 +42,12 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         selectedFontSize: 0,
         type: BottomNavigationBarType.fixed,
-        onTap: (index){},
+        currentIndex: currentIndex,
+        onTap: (index){
+          setState(() {
+            currentIndex = index;
+          });
+        },
         elevation: 10.0,
         iconSize: 30.0,
         items: [
@@ -53,13 +71,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: (currentIndex==0)? FloatingActionButton(
         onPressed: () {},
         child: Icon(
-          Icons.message,
+          Icons.add,
         ),
-      ),
-      body: MsgScreen(),
+      ) : null,
+      body: screens[currentIndex],
     );
   }
 }
