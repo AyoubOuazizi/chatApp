@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../shared/components/components.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
@@ -72,47 +71,3 @@ class SettingsScreen extends StatelessWidget {
                 ])));
   }
 }
-          
-    //       Divider(),
-    //       ListTile(
-    //         title: Text('Account Name'),
-    //         subtitle: Text("Mansour Chaouki"),
-    //         onTap: () {
-    //           // show dialog to update name
-    //         },
-    //       ),
-    //       Divider(),
-    //       ListTile(
-    //         title: Text('Status'),
-    //         subtitle: Text("I hate school"),
-    //         onTap: () {
-    //           // show dialog to update status
-    //         },
-    //       ),
-    //       Divider(),
-    //       ListTile(
-    //         title: Text('Mail adress'),
-    //         subtitle: Text("0666778899"),
-    //         onTap: () {
-    //           // show dialog to update phone number
-    //         },
-    //       ),
-    //       Divider(),
-    //       ListTile(
-    //         title: Text('Email'),
-    //         subtitle: Text("chaouki@gmail.com"),
-    //         onTap: () {
-    //           // show dialog to update email
-    //         },
-    //       ),
-    //       Divider(),
-    //       ListTile(
-    //         title: Text('About our Chat App'),
-    //         onTap: () {},
-    //       ),
-    //     ],
-    //   ),
-      
-    // );
-    
-

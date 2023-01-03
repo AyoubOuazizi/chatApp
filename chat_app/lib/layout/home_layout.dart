@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../modules/calls/calls_screen.dart';
 import '../modules/messages/messages_screen.dart';
+import '../modules/settings/settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,37 +16,48 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> screens = [
     MsgScreen(),
     CallScreen(),
-    CallScreen(),
+    SettingsScreen(),
   ];
   List<String> titles = [
     'Messages',
     'Calls',
     'Settings',
   ];
+  var scaffoldKey = GlobalKey<ScaffoldState>();
+  bool isBottomSheetShown = false;
+  IconData icon = Icons.add;
+  var userController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: Text(
-          titles[currentIndex],
+          isBottomSheetShown ? 'New chat' : titles[currentIndex],
         ),
         actions: [
-          IconButton(
-            onPressed: (){},
-            icon: Icon(
-              Icons.search
+          if (!isBottomSheetShown)
+            IconButton(
+              onPressed: (){},
+              icon: Icon(
+                Icons.search
+              ),
             ),
-          ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedFontSize: 0,
         type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,
-        onTap: (index){
+        onTap: (index) {
           setState(() {
             currentIndex = index;
+            if (isBottomSheetShown) {
+              Navigator.pop(context);
+              isBottomSheetShown = false;
+              icon = Icons.add;
+            }
           });
         },
         elevation: 10.0,
@@ -72,10 +84,61 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       floatingActionButton: (currentIndex==0)? FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          if(isBottomSheetShown){
+            Navigator.pop(context);
+            isBottomSheetShown = false;
+            setState(() {
+              icon = Icons.add;
+            });
+          } else {
+            scaffoldKey.currentState?.showBottomSheet(
+                    (context) => Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  color: Colors.grey[100],
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: userController,
+                          keyboardType: TextInputType.text,
+                          validator: (value) {
+                            if(value!=null && value.isEmpty)
+                              return 'username must not be empty';
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            labelText: "Username",
+                            suffixIcon: Icon(
+                              Icons.search,
+                            ),
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                    elevation: 20.0,
+            ).closed.then((value)
+            {
+              isBottomSheetShown = false;
+              setState(() {
+                icon = Icons.add;
+              });
+            });
+            isBottomSheetShown = true;
+            setState(() {
+              icon = Icons.close;
+            });
+          }
+        },
         child: Icon(
-          Icons.add,
+          icon,
         ),
+        backgroundColor: isBottomSheetShown? Colors.lightBlueAccent : Colors.blue,
       ) : null,
       body: screens[currentIndex],
     );
