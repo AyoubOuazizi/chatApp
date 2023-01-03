@@ -1,4 +1,5 @@
 import 'package:chat_app/layout/home_layout.dart';
+import 'package:chat_app/modules/SignUp/SignUp_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -150,7 +151,14 @@ class LoginScreen extends StatelessWidget {
                       "Don't have account?"
                   ),
                   TextButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SignUpScreen(),
+                        ),
+                      );
+                    },
                     child: Text(
                       "Sign up",
                     ),
