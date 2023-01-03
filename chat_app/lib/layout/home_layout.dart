@@ -71,12 +71,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: (currentIndex==0)? FloatingActionButton(
         onPressed: () {},
         child: Icon(
-          (currentIndex==1)? Icons.add_ic_call:Icons.message,
+          Icons.add,
         ),
-      ),
+      ) : null,
       body: screens[currentIndex],
     );
   }

@@ -53,6 +53,8 @@ Widget buildMsgItem() => Padding(
               children: [
                 Icon(
                   Icons.done_all,
+                  color: Colors.blue,
+                  size: 20.0,
                 ),
                 SizedBox(
                   width: 3.0,
