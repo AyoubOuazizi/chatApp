@@ -42,7 +42,7 @@ Widget buildMsgItem() => Padding(
                   ),
                 ),
                 Text(
-                  '15:00'
+                  '15:00',
                 ),
               ],
             ),
@@ -61,6 +61,48 @@ Widget buildMsgItem() => Padding(
                 ),
                 Text(
                   'hhhhhhh exam rda',
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    ],
+  ),
+);
+
+Widget buildNewFriendItem() => Padding(
+  padding: EdgeInsets.symmetric(
+    horizontal: 20.0,
+    vertical: 10.0,
+  ),
+  child: Row(
+    children: [
+      Stack(
+        alignment: AlignmentDirectional.bottomEnd,
+        children: [
+          CircleAvatar(
+            radius: 30.0,
+            backgroundImage: NetworkImage("https://cdn-icons-png.flaticon.com/512/3135/3135715.png"),
+          ),
+        ],
+      ),
+      SizedBox(
+        width: 20.0,
+      ),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'OUAZIZI Ayoub',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ],
             ),

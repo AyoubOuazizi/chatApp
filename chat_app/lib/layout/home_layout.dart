@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../modules/calls/calls_screen.dart';
 import '../modules/messages/messages_screen.dart';
 import '../modules/settings/settings_screen.dart';
+import '../shared/components/components.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -27,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isBottomSheetShown = false;
   IconData icon = Icons.add;
   var userController = TextEditingController();
+  int newChatResultCount = 10;
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +103,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
+                        SizedBox(
+                          height: 15.0,
+                        ),
                         TextFormField(
                           controller: userController,
                           keyboardType: TextInputType.text,
@@ -115,6 +120,23 @@ class _HomeScreenState extends State<HomeScreen> {
                               Icons.search,
                             ),
                             border: OutlineInputBorder(),
+                          ),
+                        ),
+                        Expanded(
+                          child: ListView.separated(
+                            itemBuilder: (context, index) => buildNewFriendItem(),
+                            separatorBuilder: (context, index) => Padding(
+                              padding: EdgeInsetsDirectional.only(
+                                start: 20.0,
+                                end: 20.0,
+                              ),
+                              child: Container(
+                                width: double.infinity,
+                                height: 1.0,
+                                color: Colors.grey[300],
+                              ),
+                            ),
+                            itemCount: newChatResultCount,
                           ),
                         ),
                       ],
