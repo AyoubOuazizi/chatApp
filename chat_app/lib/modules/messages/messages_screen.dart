@@ -12,13 +12,13 @@ class MsgScreen extends StatelessWidget {
         if (index == itemCount -1)
           return Column(
             children: [
-              buildMsgItem(),
+              buildMsgItem(context),
               SizedBox(
                 height: 50.0,
               ),
             ],
           );
-        return buildMsgItem();
+        return buildMsgItem(context);
       },
       separatorBuilder: (context, index) => Padding(
         padding: EdgeInsetsDirectional.only(
