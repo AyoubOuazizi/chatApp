@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../modules/chat/chat_screen.dart';
+import 'constants.dart';
 
-Widget buildMsgItem(context) => InkWell(
+Widget buildMsgItem(context, chats, lastMsg) => InkWell(
   onTap: (){
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ChatScreen(),
+        builder: (context) => ChatScreen(username: chats['dest'], chatId: chats['id']),
       ),
     );
   },
@@ -47,14 +48,15 @@ Widget buildMsgItem(context) => InkWell(
                   children: [
                     Expanded(
                       child: Text(
-                        'OUAZIZI Ayoub',
+                        chats['dest'],
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                     Text(
-                      '15:00',
+                      lastMsg!=null?
+                      lastMsg['time']:"__:__",
                     ),
                   ],
                 ),
@@ -72,7 +74,8 @@ Widget buildMsgItem(context) => InkWell(
                       width: 3.0,
                     ),
                     Text(
-                      'hhhhhhh exam rda',
+                      lastMsg!=null?
+                      lastMsg['message']:'...',
                     ),
                   ],
                 ),
@@ -85,46 +88,71 @@ Widget buildMsgItem(context) => InkWell(
   ),
 );
 
-
-Widget buildNewFriendItem() => Padding(
-  padding: EdgeInsets.symmetric(
-    horizontal: 20.0,
-    vertical: 10.0,
-  ),
-  child: Row(
-    children: [
-      Stack(
-        alignment: AlignmentDirectional.bottomEnd,
+Widget buildNewFriendItem(context, String username) => InkWell(
+  onTap: () async {
+    List<Map> chat = await database.rawQuery('SELECT * FROM chats WHERE username="${connectedUser.username}" AND dest="$username"');
+    if(chat.isEmpty) {
+      database.transaction((txn) async{
+        txn.rawInsert(
+            'INSERT INTO chats(username, dest) VALUES("${connectedUser.username}", "$username")'
+        ).then((value) async {
+          chat = await database.rawQuery('SELECT * FROM chats WHERE username="${connectedUser.username}" AND dest="$username"');
+          print('$value inserted successfully');
+        }).catchError((error) {
+          print('Error When Inserting New Record ${error.toString()}');
+        });
+        return null;
+      });
+    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChatScreen(username: username, chatId: chat.isNotEmpty?chat[0]['id']:-1),
+      ),
+    );
+  },
+  child:   Ink(
+    child:   Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 20.0,
+        vertical: 10.0,
+      ),
+      child: Row(
         children: [
-          CircleAvatar(
-            radius: 30.0,
-            backgroundImage: NetworkImage("https://cdn-icons-png.flaticon.com/512/3135/3135715.png"),
+          Stack(
+            alignment: AlignmentDirectional.bottomEnd,
+            children: [
+              CircleAvatar(
+                radius: 30.0,
+                backgroundImage: NetworkImage("https://cdn-icons-png.flaticon.com/512/3135/3135715.png"),
+              ),
+            ],
           ),
-        ],
-      ),
-      SizedBox(
-        width: 20.0,
-      ),
-      Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+          SizedBox(
+            width: 20.0,
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Text(
-                    'OUAZIZI Ayoub',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        username,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-    ],
+    ),
   ),
 );
 
@@ -193,6 +221,7 @@ Widget ownMessageCard({
   child: ConstrainedBox(
     constraints: BoxConstraints(
       maxWidth: MediaQuery.of(context).size.width - 45,
+      minWidth: 120.0,
     ),
     child: Card(
       elevation: 1,
@@ -252,6 +281,7 @@ Widget replyCard({
   child: ConstrainedBox(
     constraints: BoxConstraints(
       maxWidth: MediaQuery.of(context).size.width - 45,
+      minWidth: 120.0,
     ),
     child: Card(
       elevation: 1,

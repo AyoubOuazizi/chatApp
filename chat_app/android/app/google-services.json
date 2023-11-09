@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1033929284719",
+    "project_id": "chatapp-d6ac1",
+    "storage_bucket": "chatapp-d6ac1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033929284719:android:0d7b1871a82c4ded7f019a",
+        "android_client_info": {
+          "package_name": "ma.emi.chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033929284719-95pnnpne5pv7qtknhjmhgj5d6cuqb7hd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDw2Z1q_TSYvAZi7O5IkU0h2LDtNXRvKNw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033929284719-95pnnpne5pv7qtknhjmhgj5d6cuqb7hd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,8 @@
+import 'package:chat_app/models/user.dart';
 import 'package:chat_app/modules/login/login_screen.dart';
+import 'package:chat_app/shared/components/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
@@ -26,11 +29,10 @@ class SettingsScreen extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      'Chaouki Mansour',
+                      connectedUser.username,
                       style:
                           TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                     ),
-                    Text('I hate school'),
                     SizedBox(
                       height: 60.0,
                     ),
@@ -58,7 +60,7 @@ class SettingsScreen extends StatelessWidget {
                                   left: 5.0,
                                 ),
                                 child: Text(
-                                  'chaouki@gmail.com',
+                                  connectedUser.email,
                                 ),
                               ),
                             ],
@@ -126,7 +128,17 @@ class SettingsScreen extends StatelessWidget {
                     ),
                     Divider(),
                     InkWell(
-                      onTap: (){
+                      onTap: () {
+                        connectedUser = User(email: "", password: "");
+                        SharedPreferences.getInstance().then((pref) {
+                          pref.remove("user.email");
+                          pref.remove("user.password");
+                          pref.remove("user.username");
+                          pref.remove("user.token");
+                        });
+                        if(stompClient!=null) {
+                          stompClient.deactivate();
+                        }
                         Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
                             builder: (context) => LoginScreen(),
